@@ -4,4 +4,5 @@
     <string name="first_action_string">Action1</string>
     <string name="second_action_string">Action2</string>
     <string name="third_action_string">Action3</string>
+    <string name="action_search">Search Me</string>
 </resources>

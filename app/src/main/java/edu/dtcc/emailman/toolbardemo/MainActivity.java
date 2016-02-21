@@ -3,7 +3,9 @@ package edu.dtcc.emailman.toolbardemo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+// import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "You pressed a floating action button!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -34,7 +36,45 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+
+    /*
+       MenuItem searchItem = menu.findItem(R.id.myActionItem);
+        SearchView searchView =
+                (SearchView) MenuItemCompat.getActionView(searchItem);
+     */
+
+        // Define the listener
+        MenuItemCompat.OnActionExpandListener expandListener =
+                new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                Toast toast= Toast.makeText(getApplicationContext(),
+                        "Search collapsed", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                return true;  // Return true to collapse action view
+            }
+
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                Toast toast= Toast.makeText(getApplicationContext(),
+                        "Search expanded", Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
+                return true;  // Return true to expand action view
+            }
+        };
+
+        // Get the MenuItem for the action item
+        MenuItem actionMenuItem = menu.findItem(R.id.myActionItem);
+
+        // Assign the listener to that action item
+        MenuItemCompat.setOnActionExpandListener(actionMenuItem, expandListener);
+
+
+        return super.onCreateOptionsMenu(menu);
+
+        //return true;
     }
 
     @Override
@@ -45,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action1:
                 Snackbar.make(findViewById(R.id.myCoordinatorLayout),
-                        "This is Action 1.\tWatch the floating action button move out off the way.",
-                        Snackbar.LENGTH_LONG).show();
+                        "This is Action 1.  Watch the floating action button move out off the way.",
+                        Snackbar.LENGTH_SHORT).show();
                 return true;
 
             case R.id.action2:
